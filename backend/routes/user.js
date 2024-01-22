@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const zod = require('zod')
-const { User } = require( '../db/db' )
+const { User, Account } = require( '../db/db' )
 const jwt = require('jsonwebtoken')
 const token = require( '../config' )
 const { jwtPass } = require( '../secrates' )
@@ -41,6 +41,14 @@ userRouter.post('/signup',async (req,res) => {
         lastName: req.body.lastName,
     })
     const userId = user._id;
+
+    const randomBalance = () => {
+        return Math.floor(Math.random() * 10000)
+    }
+    const account = await Account.create({
+        userId : userId,
+        balance : randomBalance
+    })
 
     const token = jwt.sign({
         userId

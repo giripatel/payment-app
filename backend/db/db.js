@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const {mongoString} = require('../secrates');
-const { number, Schema } = require( 'zod' );
+const { number } = require( 'zod' );
 
 mongoose.connect(mongoString)
 const userSchema = new mongoose.Schema({
