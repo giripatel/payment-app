@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {mongoString} = require('../secrates');
+const {mongoString} = require('../secrates')
 const { number } = require( 'zod' );
 
 mongoose.connect(mongoString)

@@ -10,7 +10,7 @@ const userRouter = Router()
 
 const validation = zod.object({
     username :  zod.string().email(),
-    password : zod.string(),
+    password : zod.string().min(6),
     firstname : zod.string(),
     lastname : zod.string()
 })
