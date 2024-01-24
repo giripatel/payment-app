@@ -18,13 +18,13 @@ const userSchema = new mongoose.Schema({
         required : true,
         minLength : 6,
     },
-    firstName:{
+    firstname:{
         type : String,
         required : true,
         trim : true,
         maxLength : 50
     },
-    lastName:{
+    lastname:{
         type : String,
         required : true,
         trim : true,
@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
 
 const accountSchema  = new mongoose.Schema({
     userId : {
-        type : mongoose.Schema.Types.ObjcetId, 
+        type : mongoose.Schema.Types.ObjectId, 
         ref : "User", 
         required : true
     },

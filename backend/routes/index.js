@@ -1,11 +1,11 @@
-const {Router} = require('express')
+const express = require('express');
+const bodyParser = require('body-parser');
 const userRouter = require('./user');
-const accountRouter = require( './account' );
-const router = Router();
+const accountRouter = require('./account');
 
-router.use('/user',userRouter)
-router.use('/account',accountRouter)
+const mainRouter = express.Router();
 
-module.exports = {
-    router
-}
+mainRouter.use('/user', userRouter);
+mainRouter.use('/account', accountRouter);
+
+module.exports = mainRouter

@@ -7,8 +7,8 @@ const app = express();
 
 app.use(bodyParser.json())
 app.use(cors())
-app.use('api/v1',mainRouter)
 
-app.listen(3000,() => {
 
-})
+app.use('/api/v1',mainRouter)
+
+app.listen(3000);

@@ -1,11 +1,12 @@
-const {Router} = require('express');
+const express = require('express');
 const { User, Account } = require( '../db/db' );
 const { default: mongoose } = require( 'mongoose' );
+const { authMiddleware } = require( '../middlewares/middleware' );
 
-const accountRouter = Router();
+const accountRouter = express.Router();
 
-accountRouter.get('/balance', async(req,res) => {
-    const account = await Account.findById({
+accountRouter.get('/balance',authMiddleware, async(req,res) => {
+    const account = await Account.findOne({
         userId : req.userId
     })
 
@@ -14,14 +15,14 @@ accountRouter.get('/balance', async(req,res) => {
     })
 })
 
-accountRouter.post('/transfer', async (req,res) => {
+accountRouter.post('/transfer',authMiddleware, async (req,res) => {
 
     const session = await mongoose.startSession();
 
     session.startTransaction()
     const {amount,to} = req.body
 
-    const senderAccount = await Account.findById({
+    const senderAccount = await Account.findOne({
         userId : req.userId
     }).session(session);
 
@@ -31,23 +32,21 @@ accountRouter.post('/transfer', async (req,res) => {
             message : "Insufficient balance"
         })
     }
-
-    await fidnbyIdAndUpdate(userId ,{$inc :{balance :-amount}})
-
-    const receiverAccount =  await Account.findById({
+    
+    const receiverAccount =  await Account.findOne({
         userId : to,
     }).session(session)
-
+    
     if(!receiverAccount){
         session.abortTransaction(session)
         res.status(400).json({
             message : "Invalid user"
         })
     }
-
+    
     await Account.updateOne({userId : req.userId},{$inc : {balance : -amount}}).session(session)
     await Account.updateOne({userId : to},{$inc : {balance : amount}}).session(session)
- 
+
     res.status(200).json({
         message : "Transer successful"
     })
