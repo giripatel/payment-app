@@ -1,5 +1,5 @@
-import Signin from "./Signin";
-import Signup from "./Signup";
+import {Signin} from "./Signin.jsx";
+import {Signup} from "./Signup";
 import Dashboard from "./Dashboard"
 export {
     Signin,

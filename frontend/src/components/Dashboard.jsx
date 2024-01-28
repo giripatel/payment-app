@@ -1,46 +1,26 @@
+import axios from "axios";
 import UserSearch from "./UserSearch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import {balanceAtom} from './Recoil.js'
 const Dashboard = () => {
 
-    const [ users, setUsers ] = useState( [ {
-        img_url: "https://unsplash.com/photos/pink-flower-cNGUw-CEsp0",
-        name: "Giridhar Patel",
-    },{
-        img_url: "./random.png",
-        name: "Giridhar Patel",  
-    },{
-        img_url: "./random.png",
-        name: "Giridhar Patel",  
-    },{
-        img_url: "./random.png",
-        name: "Giridhar Patel",  
-    },{
-        img_url: "./random.png",
-        name: "Giridhar Patel",  
-    },{
-        img_url: "./random.png",
-        name: "Giridhar Patel",  
-    },{
-        img_url: "./random.png",
-        name: "Giridhar Patel",  
-    },{
-        img_url: "./random.png",
-        name: "Giridhar Patel",  
-    },{
-        img_url: "./random.png",
-        name: "Giridhar Patel",  
-    },{
-        img_url: "./random.png",
-        name: "Giridhar Patel",  
-    },{
-        img_url: "./random.png",
-        name: "Giridhar Patel",  
-    },{
-        img_url: "./random.png",
-        name: "Giridhar Patel",  
-    },] );
+    const [ users, setUsers ] = useState([]);
+    const [filter,setFilter] = useState('')
+    const balance = useRecoilValue(balanceAtom)
+
+    useEffect( ()=> {
+        
+        axios.get('http://localhost:3000/api/v1/user/bulk?filter=' + filter)
+        .then((response) =>{
+            
+            setUsers(response.data.users)
+        })
+    },[filter])
+
     return (
         <div className="">
+            {console.log(users)}
             <div className="m-4">
                 <div>
                     <nav className="flex justify-between">
@@ -51,16 +31,15 @@ const Dashboard = () => {
                         </div>
                     </nav>
                     <hr className="mt-2"/>
-                    <h3 className="font-semibold my-2 text-lg">Your Balance $5000</h3>
+                    <h3 className="font-semibold my-2 text-lg">Your Balance is Rs {" "+balance} </h3>
                     <h3 className="font-semibold my-2 text-lg">Users</h3>
-                    <input type="text" placeholder="Search" className="border border-gray-300  w-[99%] p-2 m-2" />
+                    <input onChange={(e) => setFilter(e.target.value)} type="text" placeholder="Search" className="border border-gray-300  w-[99%] p-2 m-2" />
                 </div>
                 {users.map((user ,index) => (
                     <div key={index}>
                         <UserSearch user={user}/>
                     </div>
                 ))
-                    
                 }
             </div>
         </div>

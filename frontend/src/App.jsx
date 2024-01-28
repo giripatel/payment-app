@@ -1,26 +1,30 @@
 import { useState } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import {Signin,Signup, Dashboard} from './components/index'
-import UserSearch from './components/UserSearch'
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+} from "react-router-dom";
+import {Signup,Signin, Dashboard} from './components/index'
 import MoneySender from './components/MoneySender'
+import { RecoilRoot } from 'recoil';
+
 function App() {
   const [ count, setCount ] = useState( 0 )
 
   return (
-    <div>
-      {/* <BrowserRouter>
-        <Routes> */}
-          {/* <Route path='/singup' element={ <Signup /> } /> */}
-          {/* <Route path='/singin' element={ <Signin /> } /> */}
-          {/* <Route path='/dashborad' element={ <Dashborad /> } /> */}
-        {/* </Routes>
-      </BrowserRouter> */}
-      {/* <Signup /> */}
-      {/* <Signin/> */}
-      {/* <Dashboard/> */}
-      {/* <UserSearch/> */}
-      <MoneySender/>
-    </div>
+    <>
+      <BrowserRouter>
+      <RecoilRoot>
+        <Routes> 
+          <Route path="/signup" element={<Signup />} />
+          <Route path='/signin' element={ <Signin /> } />
+          <Route path='/dashboard' element={ <Dashboard /> } /> 
+          <Route path='/send' element={ <MoneySender /> } /> 
+        </Routes>
+        </RecoilRoot>
+      </BrowserRouter>
+
+    </>
   )
 }
 
